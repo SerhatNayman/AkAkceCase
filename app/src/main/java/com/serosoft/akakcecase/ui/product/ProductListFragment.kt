@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.serosoft.akakcecase.R
 import com.serosoft.akakcecase.data.entity.Product
 import com.serosoft.akakcecase.databinding.FragmentProductListBinding
@@ -16,55 +17,51 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductListFragment : Fragment() {
-    private lateinit var viewModel: ProductListViewModel
+
     private lateinit var binding: FragmentProductListBinding
+
+    private val viewModel: ProductListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_product_list, container, false
-        )
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_product_list, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.productListFragment = this
 
         viewModel.productList.observe(viewLifecycleOwner) {
 
-            val adapter = ProductAdapter(requireContext(), it!!, viewModel)
-            binding.productAdapter = adapter
-            listControl(it)
+            if (it.isNullOrEmpty()) {
+                binding.txtError.visibility = View.VISIBLE
+            } else {
+                val adapter = ProductAdapter(it) { code ->
+                    val action = ProductListFragmentDirections.productToDetail(code)
+                    findNavController().navigate(action)
 
+                }
+                binding.productAdapter = adapter
+                binding.txtError.visibility = View.GONE
+            }
         }
 
         viewModel.horizontalProductList.observe(viewLifecycleOwner) {
-            val adapter = HorizontalProductAdapter(requireContext(), it!!, viewModel)
-            binding.horizontalProductAdapter = adapter
-        }
 
-
-
-        return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val tempViewModel: ProductListViewModel by viewModels()
-        viewModel = tempViewModel
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    fun listControl(list: List<Product>) {
-        if (list.isEmpty()) {
-            binding.txtError.visibility = View.VISIBLE
-        } else {
-            binding.txtError.visibility = View.GONE
+            if (it.isNullOrEmpty()) {
+                binding.txtError.visibility = View.VISIBLE
+            } else {
+                val adapter = HorizontalProductAdapter(it) { code ->
+                    val action = ProductListFragmentDirections.productToDetail(code)
+                    findNavController().navigate(action)
+                }
+                binding.horizontalProductAdapter = adapter
+                binding.txtError.visibility = View.GONE
+            }
         }
     }
-
-
 }

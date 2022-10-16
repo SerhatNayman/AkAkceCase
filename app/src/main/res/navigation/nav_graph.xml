@@ -17,7 +17,7 @@
         android:name="com.serosoft.akakcecase.ui.detail.DetailFragment"
         android:label="DetailFragment" >
         <argument
-            android:name="product"
-            app:argType="com.serosoft.akakcecase.data.entity.Product" />
+            android:name="code"
+            app:argType="integer" />
     </fragment>
 </navigation>

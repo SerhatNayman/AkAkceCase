@@ -8,13 +8,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ProductRepository(var productApiService: ProductApiService) {
+class ProductRepository(private var productApiService: ProductApiService) {
 
     val productList = MutableLiveData<List<Product>?>()
-    val productListHorizontal = MutableLiveData<List<HorizontalProduct>?>()
-    val productDetailList = MutableLiveData<List<DetailResponse>?>()
-    val storageOptionsList = MutableLiveData<List<ResultDetail>>()
-
+    val productListHorizontal = MutableLiveData<List<Product>?>()
+    val productDetail = MutableLiveData<ResultDetail?>()
 
     fun getProduct() {
         productApiService.allProducts().enqueue(object : Callback<ProductResponse> {
@@ -27,28 +25,19 @@ class ProductRepository(var productApiService: ProductApiService) {
 
                     if (response.isSuccessful) {
                         productList.value = products
-
-
                     }
                     response.body()?.result?.horizontalProducts.let { horizontalProducts ->
 
                         if (response.isSuccessful) {
                             productListHorizontal.value = horizontalProducts
                         }
-
-
                     }
-
-
                 }
-
             }
-
 
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
         })
 
         productApiService.nextUrl().enqueue(object : Callback<ProductResponse> {
@@ -62,21 +51,16 @@ class ProductRepository(var productApiService: ProductApiService) {
                     val list = response.body()
                     list?.result?.nextUrl?.let { url ->
                         if (response.isSuccessful) {
+
                         }
-
-
                     }
                 }
             }
 
-
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
         })
-
-
     }
 
 
@@ -84,8 +68,12 @@ class ProductRepository(var productApiService: ProductApiService) {
         return productList
     }
 
-    fun getHorizontalProducts(): MutableLiveData<List<HorizontalProduct>?> {
+    fun getHorizontalProducts(): MutableLiveData<List<Product>?> {
         return productListHorizontal
+    }
+
+    fun getDetailProduct(): MutableLiveData<ResultDetail?> {
+        return productDetail
     }
 
     fun getDetail(code:Int) {
@@ -95,21 +83,14 @@ class ProductRepository(var productApiService: ProductApiService) {
                 call: Call<DetailResponse>,
                 response: Response<DetailResponse>
             ) {
-
-                productApiService.getProductDetail(code).let { code->
+                response.body()?.result?.let { result ->
+                    productDetail.value = result
                 }
             }
-
 
             override fun onFailure(call: Call<DetailResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
         })
-
-
     }
-
-
 }
-
