@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="horizontalProductAdapter"
+            type="com.serosoft.akakcecase.ui.product.adapter.HorizontalProductAdapter" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_hr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="8dp"
+        app:cardElevation="10dp"
+        app:contentPadding="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_product_hr"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/txt_name_hr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="iPhone 13 128 GB"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_product_hr"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_price_hr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:text="20.567 TL"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_product_hr"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name_hr" />
+
+            <TextView
+                android:id="@+id/txt_countOfPrices_hr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:text="131 satıcı >"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_product_hr"
+                app:layout_constraintTop_toBottomOf="@+id/txt_price_hr" />
+
+            <TextView
+                android:id="@+id/txt_followCount_hr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:text="3000+ takip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_product_hr"
+                app:layout_constraintTop_toBottomOf="@+id/txt_countOfPrices_hr" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

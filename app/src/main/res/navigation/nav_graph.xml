@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productListFragment">
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.serosoft.akakcecase.ui.product.ProductListFragment"
+        android:label="ProductListFragment" >
+        <action
+            android:id="@+id/productToDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.serosoft.akakcecase.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="product"
+            app:argType="com.serosoft.akakcecase.data.entity.Product" />
+    </fragment>
+</navigation>
